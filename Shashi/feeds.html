@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Page</title>
+    <link rel="stylesheet" href="feeds.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Feedback</h1>
+        
+        <!-- Button container for Add and Edit feedback -->
+        <div class="button-container">
+            <button id="addFeedbackBtn">Add Feedback</button>
+            <button id="editFeedbackBtn">Edit Feedback</button>
+        </div>
+        
+        <!-- Textbox for entering feedback -->
+        <textarea id="feedbackTextbox" placeholder="Write your feedback here..."></textarea>
+        
+        <!-- Submit Button -->
+        <button class="submit-btn" id="submitBtn">Submit</button>
+    </div>
+
+    <script>
+        // Handling button clicks to toggle between Add/Edit feedback modes
+        let feedbackTextbox = document.getElementById('feedbackTextbox');
+        let submitBtn = document.getElementById('submitBtn');
+        let addFeedbackBtn = document.getElementById('addFeedbackBtn');
+        let editFeedbackBtn = document.getElementById('editFeedbackBtn');
+
+        addFeedbackBtn.addEventListener('click', function() {
+            feedbackTextbox.disabled = false; // Enable textbox for adding feedback
+            feedbackTextbox.value = ''; // Clear previous feedback
+            submitBtn.style.display = 'block'; // Show submit button
+        });
+
+        editFeedbackBtn.addEventListener('click', function() {
+            feedbackTextbox.disabled = false; // Enable textbox for editing feedback
+            // Assuming you have previous feedback stored in a variable
+            feedbackTextbox.value = 'Previous feedback here...'; // Replace this with actual previous feedback
+            submitBtn.style.display = 'block'; // Show submit button
+        });
+
+        submitBtn.addEventListener('click', function() {
+            let feedback = feedbackTextbox.value;
+            if (feedback) {
+                // Save feedback to localStorage
+                saveFeedback(feedback);
+                feedbackTextbox.value = ''; // Clear the textbox after submission
+                alert("Feedback submitted successfully.");
+            } else {
+                alert("Please write some feedback before submitting.");
+            }
+        });
+
+        // Save feedback to localStorage
+        function saveFeedback(feedback) {
+            let feedbackList = JSON.parse(localStorage.getItem('feedbackData')) || [];
+            const newFeedback = {
+                id: feedbackList.length + 1,
+                feedback: feedback,
+                date: new Date().toISOString().split('T')[0] // format date as YYYY-MM-DD
+            };
+            feedbackList.push(newFeedback);
+            localStorage.setItem('feedbackData', JSON.stringify(feedbackList)); // Store updated feedback in localStorage
+        }
+    </script>
+
+</body>
+</html>

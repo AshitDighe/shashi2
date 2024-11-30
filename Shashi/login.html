@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login</h2>
+        <form id="login-form">
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" required>
+
+            <button type="submit">Login</button>
+        </form>
+        <p>Don't have an account? <a href="register.html">Register</a></p>
+    </div>
+
+    <script>
+        // Handle login form submission
+        document.getElementById('login-form').addEventListener('submit', function (e) {
+            e.preventDefault();  // Prevent the form from refreshing the page
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            console.log('Login Attempt:', email, password);  // For debugging
+
+            // Check credentials and set admin if shashi@gmail.com
+            if (email === 'shashi@gmail.com' && password === '12345') {
+                // Store user in localStorage
+                localStorage.setItem('currentUser', email);
+                window.location.href = 'feeds.html';  // Redirect to feeds page
+            } else if (password === '12345') {
+                // Regular user login
+                localStorage.setItem('currentUser', email);
+                window.location.href = 'feeds.html';  // Redirect to feeds page
+            } else {
+                alert('Invalid credentials, please try again.');
+            }
+        });
+    </script>
+</body>
+</html>

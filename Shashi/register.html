@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="register-container">
+        <h2>Register</h2>
+        <form id="register-form">
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" required>
+
+            <label for="confirm-password">Confirm Password:</label>
+            <input type="password" id="confirm-password" required>
+
+            <button type="submit">Register</button>
+        </form>
+        <p>Already have an account? <a href="login.html">Login</a></p>
+    </div>
+
+    <script>
+        // Handle register form submission
+        document.getElementById('register-form').addEventListener('submit', function (e) {
+            e.preventDefault();  // Prevent the form from refreshing the page
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+
+            // Check if passwords match
+            if (password !== confirmPassword) {
+                alert('Passwords do not match. Please try again.');
+                return;
+            }
+
+            // Check if email already exists in localStorage
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+            if (users.some(user => user.email === email)) {
+                alert('This email is already registered.');
+                return;
+            }
+
+            // Save the new user to localStorage
+            const newUser = { email: email, password: password };
+            users.push(newUser);
+            localStorage.setItem('users', JSON.stringify(users));
+
+            // Store the newly registered user as currentUser
+            localStorage.setItem('currentUser', email);
+            window.location.href = 'feeds.html';  // Redirect to feeds page after successful registration
+        });
+    </script>
+</body>
+</html>
